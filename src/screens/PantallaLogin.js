@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { EventoContext } from '../context/EventoContext';
+import BotonAccion from '../components/BotonAccion';
 
 export default function PantallaLogin({ navigation }) {
   const { usuarios, setUsuarioActual } = useContext(EventoContext);
@@ -15,14 +16,13 @@ export default function PantallaLogin({ navigation }) {
       return;
     }
 
-    // Buscamos si existe un usuario con ese correo y contraseña exactos
     const usuarioEncontrado = usuarios.find(
       u => u.correo === correo.trim().toLowerCase() && u.password === password.trim()
     );
 
     if (usuarioEncontrado) {
       setError('');
-      setUsuarioActual(usuarioEncontrado); // Guardamos quién inició sesión
+      setUsuarioActual(usuarioEncontrado);
     } else {
       setError('Correo o contraseña incorrectos.');
     }
@@ -30,12 +30,15 @@ export default function PantallaLogin({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Bienvenido a Kipus</Text>
+      <Text style={styles.logo}>KIPUS</Text>
+      <Text style={styles.sublogo}>Gestión & Talleres Culturales</Text>
+      <Text style={styles.titulo}>Iniciar Sesión</Text>
       
       <View style={styles.formulario}>
         <TextInput
           style={styles.input}
           placeholder="Correo electrónico"
+          placeholderTextColor="#999999"
           keyboardType="email-address"
           autoCapitalize="none"
           value={correo}
@@ -44,6 +47,7 @@ export default function PantallaLogin({ navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
+          placeholderTextColor="#999999"
           secureTextEntry
           value={password}
           onChangeText={setPassword}
@@ -51,9 +55,12 @@ export default function PantallaLogin({ navigation }) {
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-        <TouchableOpacity style={styles.botonEntrar} onPress={manejarLogin}>
-          <Text style={styles.textoBoton}>Iniciar Sesión</Text>
-        </TouchableOpacity>
+        <BotonAccion
+          titulo="Ingresar a la Plataforma"
+          variante="primary"
+          onPress={manejarLogin}
+          estiloPersonalizado={{ marginBottom: 12 }}
+        />
 
         <TouchableOpacity style={styles.botonRegistro} onPress={() => navigation.navigate('Registro')}>
           <Text style={styles.textoRegistro}>¿No tienes cuenta? Regístrate aquí.</Text>
@@ -65,12 +72,12 @@ export default function PantallaLogin({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#F5EFEB', justifyContent: 'center' },
-  titulo: { fontSize: 26, fontWeight: 'bold', color: '#8B1E1E', marginBottom: 30, textAlign: 'center' },
-  formulario: { backgroundColor: '#FFFFFF', padding: 20, borderRadius: 10, borderWidth: 1, borderColor: '#D5DBE1' },
-  input: { borderWidth: 1, borderColor: '#D5DBE1', borderRadius: 8, padding: 12, marginBottom: 15, fontSize: 16 },
+  logo: { fontSize: 32, fontWeight: '900', color: '#8B1E1E', textAlign: 'center', letterSpacing: 3 },
+  sublogo: { fontSize: 13, color: '#5F6B7A', textAlign: 'center', fontWeight: '600', marginBottom: 20 },
+  titulo: { fontSize: 22, fontWeight: 'bold', color: '#1A1A1A', marginBottom: 20, textAlign: 'center' },
+  formulario: { backgroundColor: '#FFFFFF', padding: 20, borderRadius: 12, borderWidth: 1, borderColor: '#D5DBE1', elevation: 2 },
+  input: { borderWidth: 1, borderColor: '#D5DBE1', borderRadius: 8, padding: 12, marginBottom: 15, fontSize: 15, backgroundColor: '#FAFAFA', color: '#1A1A1A' },
   errorText: { color: '#8B1E1E', marginBottom: 15, textAlign: 'center', fontWeight: '600' },
-  botonEntrar: { backgroundColor: '#2C8C99', padding: 15, borderRadius: 8, alignItems: 'center', marginBottom: 10 },
-  textoBoton: { color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 },
-  botonRegistro: { padding: 15, alignItems: 'center' },
-  textoRegistro: { color: '#8B1E1E', fontWeight: 'bold', fontSize: 15 }
+  botonRegistro: { padding: 10, alignItems: 'center' },
+  textoRegistro: { color: '#8B1E1E', fontWeight: 'bold', fontSize: 14 }
 });

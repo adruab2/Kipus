@@ -119,7 +119,6 @@ export default function PantallaGestionUsuarios() {
         contentContainerStyle={{ paddingBottom: 20 }}
       />
 
-      {/* MODAL CREAR / EDITAR USUARIO */}
       <Modal visible={modalVisible} transparent={true} animationType="slide">
         <View style={estilos.fondoModal}>
           <View style={estilos.cajaModal}>
